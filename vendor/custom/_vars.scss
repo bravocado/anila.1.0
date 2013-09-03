@@ -1,0 +1,440 @@
+/*=================================================================*\
+*  
+*  CONDITIONAL COMPILER I
+*  
+*  You can set it to true statement in vars.scss in custom folder
+*  please remember, after you set it to true,
+*  you have to set the variables to.
+*  scroll it, buddy~
+*  you will find it..
+*  
+*  the different between compiler I and II :
+*  
+*  I. 
+*  is a compiler like @import statement in SASS.
+*  all you need to do is set it to true or false if you want
+*  to use it. So you have a clean Anila folder.
+*  
+*  Yes, inspired by Inuit.css! :D
+*  
+\*=================================================================*/
+
+    /*------------------------------------*\
+        $DEBUG
+    \*------------------------------------*/
+    /**
+     * Debug mode will visually highlight any potential markup/accessibility quirks
+     * in the browser. Set to `true` or `false`.
+     */
+    $debug-mode:            false !default;
+
+
+    /*------------------------------------*\
+        $BORDER-BOX
+    \*------------------------------------*/
+    /**
+     * Do you want all elements to adopt `box-sizing:border-box;` as per
+     * paulirish.com/2012/box-sizing-border-box-ftw ?
+     */
+    $global-border-box:     true !default;
+
+
+    /*------------------------------------*\
+      COMPONENTS
+    \*------------------------------------*/
+
+    $use-grids:             false !default;
+    $use-buttons:           false !default;
+
+    /*------------------------------------*\
+      BASE
+    \*------------------------------------*/
+
+    $use-tables:            false !default;
+    $use-forms:             false !default;
+
+
+
+/*=================================================================*\
+*  
+*  CONDITIONAL COMPILER II
+*  
+*  You can set it to true statement in vars.scss in custom folder
+*  please remember, after you set it to true,
+*  you have to set the variables to.
+*  scroll it, buddy~
+*  you will find it..
+*  
+*  the different between compiler I and II :
+*  
+*  II. 
+*  After you set to true, you will see another variables.
+*  deep dive about compiling.
+*  sometimes you only need a specific styling without compiling
+*  all of Anila styling. Well, i won't make your CSS more heavy.
+*  
+*  example case :
+*  you need a form styling, but actually the only thing that fit
+*  to your needs is form inline. So you can compile that
+*  css class without compiling other classes. Why you have to
+*  compile all classes, when you won't it? :D
+*  
+\*=================================================================*/
+
+
+    /*------------------------------------*\
+        $QOUTES
+    \*------------------------------------*/
+
+    $english-quotes:            true !default;
+
+
+    /*------------------------------------*\
+        $SCREENS AND RESPONSIVE CONDITIONS
+    \*------------------------------------*/
+
+    $media-desktop:             true !default;
+    $media-tablet:              true !default;
+    $media-phone:               true !default;
+    $media-print:               true !default;
+
+
+    $responsive:                true !default;
+
+    /**
+     * specified target?
+     */
+    $specified:                 true !default;
+
+    /**
+     * render for no-script user?
+     */
+    $no-script:                 true !default;
+
+    /**
+     * mixin respond($to-media)
+     */
+    $content-respond-to:        nothing !default;
+
+
+    /*------------------------------------*\
+        $GRIDS
+        by: Foundation
+        edit: @bravocado
+    \*------------------------------------*/
+
+    // handling responsive images?
+    // i will put this on grid 'till i have
+    // my own images library
+    $use-img-responsive:                    true !default;
+
+
+    // large vs small?
+    // If you know that your grid structure will be
+    // the same for small devices as it will be
+    // on large devices, just use the small grid.
+    // You can override your small grid classes
+    // by adding large grid classes to it.
+
+    $use-base-grid-class-large:             true !default;
+    $use-base-grid-class-large-offset:      true !default;
+    $use-base-grid-class-large-positioning: true !default;
+    $use-base-grid-push-and-pull:           true !default;
+    
+    $use-base-grid-class-small:             true !default;
+    $use-base-grid-class-small-offset:      true !default;
+    $use-base-grid-class-small-positioning: true !default;
+
+    $use-block-grids:                       true !default;
+
+
+
+
+    /*------------------------------------*\
+        $BUTTONS
+    \*------------------------------------*/
+
+    $btn-themes:        true !default; // B[1]
+    $flat-btn:          true !default; // if you want to use this, B[1] must filled true
+    $flat-cast-shadow:  true !default; // adding extra solid darken shadow to the flat button theme
+    $pretty-btn:        true !default; // if you want to use this, B[1] must filled true
+    $btn-disabled:      true !default; // if you want to use this, B[1] must filled true
+    $btn-sizes:         true !default;
+    $btn-block:         true !default;
+    $btn-edges:         true !default;
+    $dynamic-buttons:   true !default;
+
+
+    /*------------------------------------*\
+        $TABLES
+    \*------------------------------------*/
+
+    $base-table-sizes:      true !default;
+    $table-bordered:        true !default;
+    $table-striped:         true !default;
+    $table-striped-even:    true !default; // if false but $table-striped true you will get (odd) striped.
+    $table-data:            true !default;
+    $table-hover:           true !default;
+    $table-drop-shadow:     true !default;
+
+
+    /*------------------------------------*\
+        $FORMS
+    \*------------------------------------*/
+
+    $use-form-inline:           true !default;
+    $use-form-horizontal:       true !default;
+    $use-form-border-radius:    false !default;
+
+
+/*=================================================================*\
+*
+*  ALL VARIABLES VALUES
+* 
+*  once you set your conditions true, you can find
+*  which variable value do you want to change.
+*  again, please remember to place your custom vars
+*  in vars.scss at custom folder.
+*  this place should be clean for your own sake.
+*
+\*=================================================================*/
+
+    /*------------------------------------*\
+        $GLOBAL VARIABLES
+    \*------------------------------------*/
+
+    /* ------------
+     * COLORS
+     * --------- */
+
+    $general-color: #FFFFFF;
+
+    $primary-base-color: #c0392b;
+
+    // other colors
+    //$secondary-base-color: #2ecc71;
+    //$tertiary-base-color: #2980b9;
+    //$quaternary-base-color: #e67e22;
+    //$quinary-base-color:;
+    //$senary-base-color:;
+    //$septenary-base-color:;
+    //$octonary-base-color:;
+    //$nonary-base-color:;
+    //$denary-base-color:;
+
+    /* ------------
+     * TEXT
+     * --------- */
+
+    $text-direction:        ltr !default;
+
+    // Floats
+    $default-float:         left !default;
+    $switch-float:          right !default;
+
+
+    @if $text-direction == ltr {
+      $default-float: left;
+      $switch-float: right;
+    } @else {
+      $default-float: right;
+      $switch-float: left;
+    }
+
+    // em base
+    $em-base: 16px !default;
+
+    // Working in ems is annoying.
+    // Think in pixels by using this handy function, emCalc(#px)
+    @function emCalc($pxWidth) {
+      @return $pxWidth / $em-base * 1em;
+    }
+
+    /*-------------------------------------------------*\
+        $GRIDS VARIABLES
+    \*-------------------------------------------------*/
+
+    $row-width:                     100% !default;
+    $column-gutter:                 emCalc(30px) !default;
+    $total-columns:                 12 !default;
+
+    @function gridCalc($colNumber, $totalColumns) {
+      @return percentage(($colNumber / $totalColumns));
+    }
+
+    $block-grid-elements:           12 !default;
+    $block-grid-default-spacing:    emCalc(20px) !default;
+
+
+    /*------------------------------------*\
+        $CSS BREAK POINT VARIABLES
+    \*------------------------------------*/
+    /**
+     * Tell Anila when breakpoints start.
+     */
+
+    $phone-start:       0px!default;
+    $tablet-start:      768px!default;
+    $desktop-start:     1024px!default;
+
+    /*------------------------------------*\
+        $TYPOGRAPHY VARIABLES
+    \*------------------------------------*/
+
+    // Typography
+    $font-family:               "Arial" !default;
+    $font-style-italic:         italic;
+    $font-smoothing:            antialiased;
+
+    // Font Weights
+    $font-weight-bold:          700;
+    $font-weight-semibold:      600;
+    $font-weight-medium:        400;
+    $font-weight-regular:       400;
+    $font-weight-light:         300;
+    $font-weight-thin:          300;
+
+    $header-font-weight:        $font-weight-thin !default;
+    $body-font-weight:          $font-weight-regular !default;
+    $type-font-weight:          $font-weight-regular !default;
+    $link-font-weight:          $font-weight-regular !default;
+    $button-font-weight:        $font-weight-semibold !default;
+    $tabs-font-weight:          $font-weight-semibold !default;
+
+    // Vertical Rhythm Spacing
+    $base-line-height:          ms(1) !default;
+    $rhythm-spacing:            .168;
+    $rhythm-height:             .711;
+
+    // Modular Scale Settings
+    // http://www.modularscale.com by Tim Brown
+    // https://github.com/scottkellum/modular-scale
+    $ratio:                     golden(); // Ratio for Modular Scale
+    $base-font-size:            ms(0) !default;
+    $importantNum:              78px !default;
+    $base-size:                 $base-font-size $importantNum;
+    // Default Scale Values: 16, 18, 26, 30, 42, 48, 68, 78, 110, 126;
+
+    // Sizing
+    $xsmall: ms(-2);
+    $small: ms(-1);
+    $norm: ms(0); // $base-font-size (16px == default)
+    $med: ms(1);
+    $large: ms(2);
+    $larger: ms(3);
+    $xlarge: ms(4);
+    $xxlarge: ms(5);
+    $xxxlarge: ms(6);
+    $reallybig: ms(8);
+    $tremendous: ms(9);
+    $absurd: ms(10);
+
+    // Typography Colors
+    $header-font-color:             #444444 !default;
+    $header-link-color:             #d04526 !default;
+    $header-link-hover-color:       #c03d20 !default;
+    $body-font-color:               #555555 !default;
+    $body-link-color:               #d04526 !default;
+    $body-link-hover-color:         #c03d20 !default;
+
+
+    /*------------------------------------*\
+        $QUOTES
+    \*------------------------------------*/
+
+    /**
+     * If you want English quotes then please do not edit these; they’re only here
+     * because Sass needs them.
+     */
+    $open-quote:    null;
+    $close-quote:   null;
+
+    /**
+     * If you need non-English quotes, please alter the following values accordingly:
+     */
+    @if $english-quotes != true{
+        $open-quote:    \00AB !default;
+        $close-quote:   \00BB !default;
+    }
+
+
+    /*------------------------------------*\
+        $SPACING VARIABLES
+    \*------------------------------------*/
+    /**
+     *
+     * Assign our `$base-line-height` to a new spacing var for more transparency.
+     */
+    $base-spacing-unit: $base-line-height!default;
+    $half-spacing-unit: $base-spacing-unit / 2!default;
+    $line-height-ratio: $base-line-height / $base-font-size;
+
+
+    /*------------------------------------*\
+        $SHAPE APPEARANCE VARIABLES
+    \*------------------------------------*/
+
+    /**
+     * How big would you like round corners to be by default?
+     */
+    $radius:        4px !default;
+    $round-radius:  200px !default;
+
+
+    /*------------------------------------*\
+        $BUTTONS VARIABLES
+    \*------------------------------------*/
+
+    /**
+     * setting for your buttons.
+     * the frist one is button class name (compiled to btn-yourbuttonname),
+     * second is the background color of yours,
+     * third is the text color,
+     * last one is the cursor
+     */
+
+    $btnstyle:  primary rgb(0,117,201) #FFF pointer,
+                whatever rgb(255,82,0) #FFF pointer !default;
+
+    $btn-disable-color:             #DDD !default;
+    $btn-disable-font-color:        #999 !default;
+    $btn-disable-cursor:            not-allowed !default;
+
+
+    /*------------------------------------*\
+        $TABLES VARIABLES
+    \*------------------------------------*/
+
+    /**
+     * table properties
+     */
+    $base-table-color:              #ccc !default;
+    $base-table-striped-color:      #f1f1f1 !default;
+    $base-table-bottom-shadow:      #d6d6d6 !default;
+    $base-table-header-color:       #f3f3f3 !default;
+    $base-table-header-shadow:      #d6d6d6 !default;
+    $base-table-hover-color:        #ff5a00 !default;
+    $base-font-table-hover-color:   #FFF !default;
+
+
+    /*------------------------------------*\
+        $FORMS VARIABLES
+    \*------------------------------------*/
+
+    // legend
+    $form-legend-font-color:            #333 !default;
+    $form-legend-border-bottom:         solid 1px #e5e5e5 !default;
+
+    // base form
+    $form-spacing:                      ms(-1) !default;
+    $input-bg-color:                    #FFFFFF !default;
+    $input-font-color:                  darken($input-bg-color, 30%) !default;
+    $input-border-width:                1px !default;
+    $input-border-style:                solid !default;
+    $input-border-color:                #DDD !default;
+    // focus state
+    $input-focus-border-color:          rgba(0,127,219,.4) !default;
+    $input-focus-box-shadow:            rgba(0,84,145,.6) !default;
+    $input-focus-box-shadow-inset:      rgba(0,84,145,.075) !default;
+    //disabled
+    $input-disabled-bg:                 lighten($input-bg-color, 10%);

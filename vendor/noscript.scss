@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/*------------------------------------*\
+    STYLE.CSS
+\*------------------------------------*/
+/**
+ *
+ * sass --watch style.scss:style.min.css --style compressed
+ *
+ * Here we pull in some variables, include the Anila framework, then add our
+ * project-specific components afterwards.
+ */
+
+  @import "compass";
+	
+/*------------------------------------*\
+    $VARS
+    see default.scss, and set it here
+\*------------------------------------*/
+
+	  $use-grids:         true;
+	  $use-buttons:       true;    
+	  $use-tables:        true;    
+    $use-forms:         true;
+		
+		/**
+		 * Setup screen
+		 */
+		$specified: 				false;
+		$no-script: 				true;
+
+/*------------------------------------*\
+    $FRAMEWORK
+\*------------------------------------*/
+
+	@import "anila/anila";

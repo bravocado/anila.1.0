@@ -1,0 +1,237 @@
+@if $use-grids == true {
+
+
+/*------------------------------------*\
+    LAYOUT GRID
+\*------------------------------------*/
+	
+	// all base grid system
+	@include base-row;
+	@include base-column;
+
+
+	/* ===================================================== *\
+	*  
+	*   Anila FAQ :
+	*  
+	*		So... Maybe this is a lil bit omplicated.
+	*		Ask yourself if you want use adaptjs.
+	*		Specified means adaptjs.
+	*		It  will render a specified query for your styling.
+	*
+	\* ===================================================== */
+
+
+	@if $specified == true {
+
+		/*------------------------------------*\
+		    $MEDIA-DESKTOP (ADAPTJS)
+		\*------------------------------------*/
+		/**
+		 * set condition for media desktop
+		 */
+		@if $media-desktop == true {
+
+			@include media-query(desktop) {
+				
+				// yes, image responsive not default
+				// use grid to true if you want use image responsive
+				@if $use-img-responsive {
+					@include img-responsive;
+				}
+
+				@if $use-base-grid-class-large {
+					// all base grid class large
+					@include base-grid-class-large;
+					@if $use-base-grid-class-large-offset {
+						@include base-grid-class-large-offset;
+					}
+					@if $use-base-grid-class-large-positioning {
+						// centered and uncentered
+						@include base-grid-class-large-positioning;
+					}
+				}
+
+				@if $use-base-grid-push-and-pull {
+					// all base grid push and pull
+					@include base-grid-push-and-pull;
+				}
+
+				@include base-column-relative;
+
+				/*------------------------------------*\
+				    BLOCK GRIDS
+				\*------------------------------------*/
+
+				@if $use-block-grids {
+					// all base block grid
+					@include base-block-grid(general);
+				}
+
+
+			}
+
+		} //end condition media-desktop
+
+		/*------------------------------------*\
+		    $MEDIA-TABLET (ADAPTJS)
+		\*------------------------------------*/
+		/**
+		 * set condition for media tablet
+		 */
+		@else if $media-tablet == true {
+
+			@include media-query(tablet) {
+				
+				// yes, image responsive not default
+				// use grid to true if you want use image responsive
+				@if $use-img-responsive {
+					@include img-responsive;
+				}
+
+				@if $use-base-grid-class-small {
+					@include base-grid-class-small;
+					// all base grid class small
+					@if $use-base-grid-class-small-offset {
+						@include base-grid-class-small-offset;
+					}
+					// centered and uncentered
+					@if $use-base-grid-class-small-positioning {
+						@include base-grid-class-small-positioning;
+					}
+				}
+
+				@if $use-base-grid-push-and-pull {
+					// all base grid push and pull
+					@include base-grid-push-and-pull;
+				}
+				
+				/*------------------------------------*\
+				    BLOCK GRIDS
+				\*------------------------------------*/
+
+				@if $use-block-grids {
+					// all base block grid
+					@include base-block-grid(general);
+				}
+
+			}	
+
+		} //end condition media-tablet
+
+		/*------------------------------------*\
+		    $MEDIA-PHONE (ADAPTJS)
+		\*------------------------------------*/
+		/**
+		 * set condition for media phone
+		 */
+		@else if $media-phone == true {
+
+			@include media-query(phone) {
+
+				// yes, image responsive not default
+				// use grid to true if you want use image responsive
+				@if $use-img-responsive {
+					@include img-responsive;
+				}
+
+				@if $use-base-grid-class-small {
+					@include base-grid-class-small;
+					// all base grid class small
+					@if $use-base-grid-class-small-offset {
+						@include base-grid-class-small-offset;
+					}
+					// centered and uncentered
+					@if $use-base-grid-class-small-positioning {
+						@include base-grid-class-small-positioning;
+					}
+				}
+
+				/*------------------------------------*\
+				    BLOCK GRIDS
+				\*------------------------------------*/
+
+				@if $use-block-grids {
+					@include base-block-grid(phone-and-tablet);
+				}
+
+			}
+
+		} //end condition media-phone
+
+	} // specified target
+
+
+	/* ===================================================== *\
+	*
+	*		Anila FAQ :
+	*		
+	*		Else will render in style.css only.
+	*		A fallback for IE Users or noscript users.
+  *   Sometimes you have to write your styling twice,
+  *   or you want to create your own mixin for fallback
+  *
+	\* ===================================================== */
+
+	// a fallback for IE8
+	@else {
+		
+		@if $use-base-grid-class-large {
+			// all base grid class large
+			@include base-grid-class-large;
+			@if $use-base-grid-class-large-offset {
+				@include base-grid-class-large-offset;
+			}
+			@if $use-base-grid-class-large-positioning {
+				// centered and uncentered
+				@include base-grid-class-large-positioning;
+			}
+		}
+
+		@if $use-block-grids {
+			@include base-block-grid(general);
+		}
+
+		// a fallback for no script user
+		@if $no-script {
+			
+			@include media-query(tablet) {
+				@if $use-base-grid-class-small {
+					@include base-grid-class-small;
+					// all base grid class small
+					@if $use-base-grid-class-small-offset {
+						@include base-grid-class-small-offset;
+					}
+					// centered and uncentered
+					@if $use-base-grid-class-small-positioning {
+						@include base-grid-class-small-positioning;
+					}
+				}
+				@if $use-block-grids {
+					@include base-block-grid(phone-and-tablet);
+				}
+			}
+
+			@include media-query(phone) {
+				@if $use-base-grid-class-small {
+					@include base-grid-class-small;
+					// all base grid class small
+					@if $use-base-grid-class-small-offset {
+						@include base-grid-class-small-offset;
+					}
+					// centered and uncentered
+					@if $use-base-grid-class-small-positioning {
+						@include base-grid-class-small-positioning;
+					}
+				}
+				@if $use-block-grids {
+					@include base-block-grid(phone-and-tablet);
+				}
+			}
+
+		} // end no-script
+
+	} // else if specified media false
+
+
+} // end if use buttons

@@ -1,0 +1,895 @@
+/*=================================================================*\
+
+    ALL MIXINS
+
+\*=================================================================*/
+
+/*------------------------------------*\
+    GENERAL MIXIN
+\*------------------------------------*/
+
+// Create vendor-prefixed CSS in one go, e.g.
+// `@include vendor(border-radius, 4px);`
+
+@mixin vendor($property, $value...){
+    -webkit-#{$property}:$value;
+       -moz-#{$property}:$value;
+         -o-#{$property}:$value;
+            #{$property}:$value;
+}
+
+@if $global-border-box == true{
+    /**
+    * Let’s make the box model all nice, shall we...?
+    */
+    *{
+        &,
+        &:before,
+        &:after{
+            @include vendor(box-sizing, border-box);
+        }
+    }
+}
+
+// Clearfix
+// --------
+// For clearing floats like a boss h5bp.com/q
+@mixin clearfix {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    // Fixes Opera/contenteditable bug:
+    // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+    line-height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+/**
+ * Create CSS keyframe animations for all vendors in one go, e.g.:
+ *
+   .foo{
+       @include vendor(animation, shrink 3s);
+   }
+
+   @include keyframe(shrink){
+       from{
+           font-size:5em;
+       }
+   }
+ *
+ * Courtesy of @integralist: twitter.com/integralist/status/260484115315437569
+ */
+@mixin keyframe ($animation-name){
+    @-webkit-keyframes $animation-name{
+        @content;
+    }
+
+    @-moz-keyframes $animation-name{
+        @content;
+    }
+
+    @-ms-keyframes $animation-name{
+        @content;
+    }
+
+    @-o-keyframes $animation-name{
+        @content;
+    }
+
+    @keyframes $animation-name{
+        @content;
+    }
+}
+
+// Transitions
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+     -moz-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+@mixin transition-delay($transition-delay) {
+  -webkit-transition-delay: $transition-delay;
+     -moz-transition-delay: $transition-delay;
+       -o-transition-delay: $transition-delay;
+          transition-delay: $transition-delay;
+}
+@mixin transition-duration($transition-duration) {
+  -webkit-transition-duration: $transition-duration;
+     -moz-transition-duration: $transition-duration;
+       -o-transition-duration: $transition-duration;
+          transition-duration: $transition-duration;
+}
+
+// Force overly long spans of text to truncate, e.g.:
+// `@include truncate(100%);`
+// Where `$truncation-boundary` is a united measurement.
+@mixin truncate($truncation-boundary){
+    max-width:$truncation-boundary;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+// inline-block hack without commenting your HTML
+@mixin inline-block {
+  display: inline-block;
+  margin-right: -4px;
+}
+
+// IE7 inline-block
+// ----------------
+@mixin ie7-inline-block() {
+  *display: inline; /* IE7 inline-block hack */
+  *zoom: 1;
+}
+
+// IE7 likes to collapse whitespace on either side of the inline-block elements.
+// Ems because we're attempting to match the width of a space character. Left
+// version is for form buttons, which typically come after other elements, and
+// right version is for icons, which come before. Applying both is ok, but it will
+// mean that space between those elements will be .6em (~2 space characters) in IE7,
+// instead of the 1 space in other browsers.
+
+@mixin ie7-restore-left-whitespace() {
+  *margin-left: .3em;
+
+  &:first-child {
+    *margin-left: 0;
+  }
+}
+
+@mixin ie7-restore-right-whitespace() {
+  *margin-right: .3em;
+}
+
+/*------------------------------------*\
+    MEDIA QUERY MIXIN
+\*------------------------------------*/
+
+// Responsive Mixins
+
+$phone-end:     $tablet-start - 1px;
+$tablet-end:    $desktop-start - 1px;
+
+@mixin media-query($media-query) {
+  
+    @if $media-query == phone {
+      @media screen and (min-width: $phone-start) and (max-width: $phone-end) { @content; }
+    }
+
+    @if $media-query == tablet {
+      @media screen and (min-width: $tablet-start) and (max-width: $tablet-end) { @content; }
+    }
+
+    @if $media-query == desktop {
+      @media screen and (min-width: $desktop-start) { @content; }
+    }
+}
+
+
+/*------------------------------------*\
+    TYPOGRAPHY MIXIN
+\*------------------------------------*/
+
+// Fonts in rems with px fallback
+// temporary mixin
+// you can delete it if you want
+@mixin font-size($size, $is-important: false) {
+  $size: if(unitless($size), $size, $size / 1px);
+
+  @if $is-important {
+    font-size: $size + px !important;
+    font-size: ($size / strip-units($base-font-size)) + rem !important;
+  } @else {
+    font-size: $size + px;
+    font-size: ($size / strip-units($base-font-size)) + rem;
+  }
+}
+
+@mixin font-shorthand($size: $base-font-size, $weight: $font-weight-bold, $lineHeight: $base-line-height) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}
+
+/*------------------------------------*\
+    GRID MIXIN
+    by Foundation
+\*------------------------------------*/
+
+@mixin img-responsive {
+  img,
+  object,
+  embed { max-width: 100%; height: auto; }
+
+  object,
+  embed { height: 100%; }
+  img { -ms-interpolation-mode: bicubic; }
+
+  #map_canvas,
+  .map_canvas {
+    img,
+    embed,
+    object { max-width: none !important;
+    }
+  }
+}
+
+
+// -------------------------------
+// fundamental mixin for
+// grids classes
+// -------------------------------
+
+@mixin grid-row($behavior: false) {
+
+  // use @include grid-row(nest); to include a nested row
+  @if $behavior == nest {
+    width: auto;
+    margin-#{$default-float}: -($column-gutter/2);
+    margin-#{$switch-float}: -($column-gutter/2);
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: none;
+  }
+
+  // use @include grid-row(collapse); to collapsed a container row margins
+  @else if $behavior == collapse {
+    width: 100%;
+    margin: 0;
+    max-width: $row-width;
+  }
+
+  // use @include grid-row(nest-collapse); to collapse outer margins on a nested row
+  @else if $behavior == nest-collapse {
+    width: auto;
+    margin: 0;
+    max-width: none;
+  }
+
+  // use @include grid-row; to use a container row
+  @else {
+    width: 100%;
+    margin-#{$default-float}: auto;
+    margin-#{$switch-float}: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: $row-width;
+  }
+
+  // Clearfix for all rows
+  @include clearfix();
+
+}
+
+// For creating columns - @include these inside a media query to control small vs. large grid layouts
+@mixin grid-column($columns:false, $last-column:false, $center:false, $offset:false, $push:false, $pull:false, $collapse:false, $float:true) {
+
+  position: relative;
+
+  // If collapsed, get rid of gutter padding
+  @if $collapse {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Gutter padding whenever a column isn't set to collapse
+  // (use $collapse:null to do nothing)
+  @else if $collapse == false {
+    padding-left: $column-gutter / 2;
+    padding-right: $column-gutter / 2;
+  }
+
+  // If a column number is given, calculate width
+  @if $columns {
+    width: gridCalc($columns, $total-columns);
+
+    // If last column, float naturally instead of to the right
+    @if $last-column { float: $switch-float; }
+  }
+
+  // If offset, calculate appropriate margins
+  @if $offset { margin-#{$default-float}: gridCalc($offset, $total-columns); }
+
+  // Source Ordering, adds left/right depending on which you use.
+  @if $push { #{$default-float}: gridCalc($push, $total-columns); #{$switch-float}: auto; }
+  @if $pull { #{$switch-float}: gridCalc($pull, $total-columns); #{$default-float}: auto; }
+
+  // If centered, get rid of float and add appropriate margins
+  @if $center {
+    margin-#{$default-float}: auto;
+    margin-#{$switch-float}: auto;
+    float: none !important;
+  }
+
+  @if $float {
+    @if $float == left or $float == true { float: $default-float; }
+    @else if $float == right { float: $switch-float; }
+    @else { float: none; }
+  }
+
+}
+
+
+// -------------------------------
+// mixin for grids classes
+// -------------------------------
+
+@mixin base-row {
+  .row {
+    @include grid-row;
+
+    &.collapse {
+      .column,
+      .columns { @include grid-column($collapse:true); }
+    }
+
+    .row { @include grid-row($behavior:nest);
+      &.collapse { @include grid-row($behavior:nest-collapse); }
+    }
+  }
+}
+
+@mixin base-column {
+  .column,
+  .columns { @include grid-column($columns:$total-columns); }
+}
+
+@mixin base-column-relative {
+  .column,
+  .columns { @include grid-column($columns:false); }
+}
+
+@mixin base-grid-class-large {
+  @for $i from 1 through $total-columns {
+    .large#{-$i} { @include grid-column($columns:$i,$collapse:null,$float:false); }
+  }  
+}
+
+@mixin base-grid-class-large-offset {
+  @for $i from 0 through $total-columns - 1 {
+    .row .large-offset-#{$i} { @include grid-column($offset:$i, $collapse:null,$float:false); }
+  }
+}
+
+@mixin base-grid-class-large-positioning {
+  .column.large-centered,
+  .columns.large-centered { @include grid-column($center:true, $collapse:null, $float:false); }
+
+  .column.large-uncentered,
+  .columns.large-uncentered {
+    margin-#{$default-float}: 0;
+    margin-#{$switch-float}: 0;
+    float: $default-float !important;
+  }
+
+  .column.large-uncentered.opposite,
+  .columns.large-uncentered.opposite {
+    float: $switch-float !important;
+  }
+}
+
+@mixin base-grid-class-small {
+  @for $i from 1 through $total-columns {
+    .small#{-$i} { @include grid-column($columns:$i,$collapse:null,$float:false); }
+  }
+}
+
+@mixin base-grid-class-small-offset {
+  @for $i from 0 through $total-columns - 2 {
+    .small-offset-#{$i} { @include grid-column($offset:$i, $collapse:null,$float:false); }
+  }
+
+  [class*="column"] + [class*="column"]:last-child { float: $switch-float; }
+  [class*="column"] + [class*="column"].end { float: $default-float; }
+}
+
+@mixin base-grid-class-small-positioning {
+  .column.small-centered,
+  .columns.small-centered { @include grid-column($center:true, $collapse:null, $float:false); }
+}
+
+@mixin base-grid-push-and-pull {
+  @for $i from 1 through $total-columns - 1 {
+    .push#{-$i} { @include grid-column($push:$i, $collapse:null, $float:false); }
+    .pull#{-$i} { @include grid-column($pull:$i, $collapse:null, $float:false); }
+  }
+}
+
+
+
+/*------------------------------------*\
+    BLOCK GRID
+\*------------------------------------*/
+
+// -------------------------------
+// fundamental mixin for
+// block grids classes
+// -------------------------------
+
+@mixin block-grid($per-row:false, $spacing:$block-grid-default-spacing, $base-style:true) {
+  @if $base-style {
+    display: block;
+    padding: 0;
+    margin: 0 (-$spacing/2);
+    @include clearfix;
+
+    &>li {
+      display: inline;
+      height: auto;
+      float: $default-float;
+      padding: 0 ($spacing/2) $spacing;
+    }
+  }
+
+  @if $per-row {
+    &>li {
+      width: 100%/$per-row;
+      padding: 0 ($spacing/2) $spacing;
+
+      &:nth-of-type(n) { clear: none; }
+      &:nth-of-type(#{$per-row}n+1) { clear: both; }
+    }
+  }
+}
+
+
+
+// -------------------------------
+// mixin for block grids classes
+// -------------------------------
+
+// utility for grid
+@mixin base-block-grid($use-for) {
+  
+  [class*="block-grid-"] { @include block-grid; }
+
+  @for $i from 1 through $block-grid-elements {
+    .small-block-grid-#{($i)} > li:nth-of-type(#{$i}n+1) { clear: none; }
+  }
+  @for $i from 1 through $block-grid-elements {
+    .large-block-grid-#{($i)} {
+      @include block-grid($i,$block-grid-default-spacing,false);
+    }
+  }
+
+    @if $use-for != phone-and-tablet {
+      /* Remove small grid clearing */
+      @for $i from 1 through $block-grid-elements {
+        .small-block-grid-#{($i)} {
+          @include block-grid($i,$block-grid-default-spacing,false);
+        }
+      } 
+    }
+
+}
+
+
+/*------------------------------------*\
+    BUTTONS MIXIN
+\*------------------------------------*/
+
+/**
+ * Base button styles.
+ *
+ * 1. Allow us to better style box model properties.
+ * 2. Line different sized buttons up a little nicer.
+ * 3. Stop buttons wrapping and looking broken.
+ * 4. Make buttons inherit font styles.
+ * 5. Force all elements using beautons to appear clickable.
+ * 6. Normalise box model styles.
+ * 7. If the button’s text is 1em, and the button is (3 * font-size) tall, then
+ *    there is 1em of space above and below that text. We therefore apply 1em
+ *    of space to the left and right, as padding, to keep consistent spacing.
+ * 8. Basic cosmetics for default buttons. Change or override at will.
+ */
+
+@mixin btn-base {
+  display:inline-block;       /* [1] */
+  vertical-align:middle;      /* [2] */
+  white-space:nowrap;         /* [3] */
+  font-family:inherit;        /* [4] */
+  font-size:100%;             /* [4] */
+  cursor:pointer;             /* [5] */
+  border:none;                /* [6] */
+  margin:0;                   /* [6] */
+  padding-top:   0;           /* [6] */
+  padding-bottom:0;           /* [6] */
+  line-height:2;              /* [7] */
+  padding-right:1em;          /* [7] */
+  padding-left: 1em;          /* [7] */
+  border-radius:$radius;      /* [8] */
+}
+
+@mixin btn-themes($is-btn-themes:false) {
+  @each $btn-appearance in $btnstyle {
+
+    @if $is-btn-themes == false {
+      .btn {
+        background-color: nth($btn-appearance, 2);
+        color: nth($btn-appearance, 3);
+        cursor: nth($btn-appearance, 4);
+        &:hover {
+          background-color: lighten(nth($btn-appearance, 2), 3.5%);
+          @include transition(background-color 150ms linear);
+        }
+        &:active {
+          background-color: darken(nth($btn-appearance, 2), 5.5%);
+          @include box-shadow(inset 0 0 5px darken(nth($btn-appearance, 2), 11%));
+          @include text-shadow(1px 1px 1px darken(nth($btn-appearance, 2), 11%));
+          @include transition(background-color 150ms linear);
+        }
+      }
+    } // default button if button themes = false
+
+    .btn-#{nth($btn-appearance, 1)} {
+      color: nth($btn-appearance, 3);
+      cursor: nth($btn-appearance, 4);
+      
+      @if $is-btn-themes == $flat-btn {
+        &.flat {
+          background-color: nth($btn-appearance, 2);
+          @if $flat-cast-shadow == true {
+            border-bottom: solid 1px (darken(nth($btn-appearance, 2), 11%));
+            @include box-shadow(inset 0 -2px 0 darken(nth($btn-appearance, 2), 11%));
+          }
+          &:hover {
+            background-color: lighten(nth($btn-appearance, 2), 3.5%);
+            @include transition(background-color 150ms linear);
+          }
+          &:active {
+            background-color: darken(nth($btn-appearance, 2), 5.5%);
+            @include box-shadow(inset 0 0 5px darken(nth($btn-appearance, 2), 11%));
+            @include text-shadow(1px 1px 1px darken(nth($btn-appearance, 2), 11%));
+            @include transition(background-color 150ms linear);
+          }
+        }
+      } // end if $is-btn-themes = flat
+
+      @if $is-btn-themes == $pretty-btn {
+        &.pretty {
+          background-color: nth($btn-appearance, 2);
+          @include background-image(linear-gradient(lighten(nth($btn-appearance, 2), 5%), saturate(nth($btn-appearance, 2), 15%)));
+          @include box-shadow(inset 0 0 8px lighten(nth($btn-appearance, 2), 20%));
+          border: 1px solid darken(nth($btn-appearance, 2), 10%);
+          &:hover {
+            @include background-image(linear-gradient(lighten(nth($btn-appearance, 2), 10%), saturate(nth($btn-appearance, 2), 15%)));
+            @include transition(background-image 250ms linear);
+          }
+          &:active {
+            background: darken(nth($btn-appearance, 2), 3.5%);
+            @include text-shadow(1px 1px 1px lighten(nth($btn-appearance, 2), 20%));
+            @include box-shadow(inset 0 2px 5px darken(nth($btn-appearance, 2), 10%));
+            color: darken(nth($btn-appearance, 2), 25%);
+            @include transition(background-image 150ms linear, color 150ms linear);
+          }
+        }
+      } // end if $is-btn-themes = pretty
+
+    } //end btn-nth
+
+  } // end each
+
+} // end mixin btn-themes
+
+@mixin btn-disabled {
+  background-color: $btn-disable-color;
+  color: $btn-disable-font-color;
+  cursor: $btn-disable-cursor;
+  &:hover {
+        background-color: $btn-disable-color;
+  }
+}
+
+@mixin size-o-btn($btn-size-is) {
+  @if $btn-size-is == xlarge {
+    font-size: $xlarge/1.2; // because xlarge just too large
+  }
+  @if $btn-size-is == large {
+    font-size: $large;
+  }
+  @if $btn-size-is == mini {
+    font-size: $small;
+  }
+}
+
+@mixin btn-edges {
+  &.soft {
+    border-radius: $round-radius;
+  }
+  &.hard {
+    border-radius: 0;
+  }
+}
+
+@mixin btn-block($block-on) {
+  @if $block-on == all {
+    .btn {
+      &.block.on-all {
+        width: 100%;
+      }
+    }
+  }
+  @if $block-on == desktop {
+    .btn {
+      &.block {
+        &.on-all,
+        &.on-desk {
+          width: 100%;
+        }
+      }
+    }
+  }
+  @if $block-on == tablet {
+    .btn {
+      &.block {
+        &.on-all,
+        &.on-tb {
+          width: 100%;
+        }
+      }
+    }
+  }
+  @if $block-on == phone {
+    .btn {
+      &.block {
+        &.on-all,
+        &.on-ph {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/*------------------------------------*\
+    FORM MIXIN
+\*------------------------------------*/
+
+@mixin base-forms {
+  fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  // Groups of fields with labels on top (legends)
+  legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: $base-line-height / 2;
+    font-size: $base-font-size * 1.5;
+    line-height: $base-line-height * 2;
+    color: $form-legend-font-color;
+    border: 0;
+    border-bottom: $form-legend-border-bottom;
+
+    // Small
+    small {
+      font-size: $base-line-height * .75;
+      color: $form-legend-font-color;
+    }
+  }
+
+  // Set font for forms
+  input,
+  button,
+  select,
+  textarea {
+    @include font-shorthand($base-font-size, $font-weight-bold, $base-line-height); // Set size, weight, line-height here
+  }
+
+  input,
+  button,
+  select,
+  textarea {
+    font-family: $font-family; // And only set font-family here for those that need it (note the missing label element)
+  }
+
+  label {
+    margin-bottom: emCalc(5px);
+  }
+
+  select,
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"],
+  .uneditable-input {
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: $base-font-size * 0.75;
+    line-height: ms(0);
+    color: $input-font-color;
+    vertical-align: middle;
+    @if $use-form-border-radius == true {
+      @include vendor(border-radius, $radius);
+    }
+  }
+  // Mozilla Firefox appearance
+  textarea {
+    padding: 6px 0 0 12px;
+  }
+
+  // Reset appearance properties for textual inputs and textarea
+  // Declare width for legacy (can't be on input[type=*] selectors or it's too specific)
+  input,
+  textarea,
+  .uneditable-input {
+    width: 206px; // plus 12px padding and 2px border
+  }
+  // Reset height since textareas have rows
+  textarea {
+    height: auto;
+    padding-top: 9px; // align with label
+  }
+
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"],
+  .uneditable-input {
+    background-color: $input-bg-color;
+    border: $input-border-style $input-border-width $input-border-color;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075));
+    @include transition(border linear .2s, box-shadow linear .2s);
+
+    // Focus state
+    &:focus {
+      border-color: $input-focus-border-color;
+      outline: 0;
+      outline: thin dotted \9; /* IE6-9 */
+      @include box-shadow(inset 0 1px 1px $input-focus-box-shadow-inset, 0 0 8px $input-focus-box-shadow);
+    }
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: auto;
+  }
+  .input-inline-word {
+    font-size: 14px;
+  }
+
+  .form-group {
+    margin-bottom: $form-spacing;
+    .form-input-control {
+      // Focus state
+      &:focus {
+        border-color: $input-focus-border-color;
+        outline: 0;
+        outline: thin dotted \9; /* IE6-9 */
+        @include box-shadow(inset 0 1px 1px $input-focus-box-shadow-inset, 0 0 8px $input-focus-box-shadow);
+      }
+    }
+  }
+
+  .form-label-control {
+    margin-bottom: 5px;
+      label,
+      span {
+        font-weight: $font-weight-bold;
+      }
+  }
+}
+
+@mixin base-form-horizontal($use-for) {
+  @if $use-for != phone {
+    .form-horizontal {
+      .form-group {
+        @include clearfix;
+        margin-bottom: base-font-size / 2;
+      }
+      .form-label-control {
+        float: left;
+        width: 40%;
+        padding-top: $base-font-size / 2;
+        &.align-top {
+          vertical-align: top;
+        }
+        label {
+          float: left;
+          width: 93%;
+        }
+        span {
+          float: left;
+          width: 7%;
+          }
+      }
+      .form-input-control {
+        float: left;
+        width: 60%;
+      }
+    }
+  }
+  @else {
+    .form-horizontal {
+      .form-label-control {
+        float: none;
+        width: 100%;
+        &.align-top {
+          vertical-align: top;
+        }
+        label {
+          float: none;
+        }
+        span {
+          float: none;
+          }
+      }
+      .form-input-control {
+        float: none;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@mixin base-form-inline($use-for) {
+  @if $use-for != phone {
+    .form-inline {
+      @include clearfix;
+      .form-group {
+        float: left;
+        width: 39%;
+        margin-right: 1%;
+        &.button-control {
+           width: 20%;
+            margin-right: 0;
+        }
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  @else {
+    .form-inline {
+      .form-label-control {
+        width: 100%;
+        text-align: left;
+        label {
+          width: auto;
+          margin-right: 2px;
+        }
+        span {
+          width: auto;
+        }
+      }
+      .form-input-control {
+        width: 100%;
+      }
+    }
+  }
+}

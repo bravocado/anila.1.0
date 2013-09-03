@@ -1,0 +1,122 @@
+/*!
+==================================
+DEMO STYLING START HERE
+==================================
+*/
+
+@import "vars"; // custom vars
+
+/*! --------- CUSTOM GLOBAL CLASSES --------- */
+
+/*
+here is your global classes 
+they will stay on every stylesheets (style-desktop, style-tablet, style-phone, style)
+*/
+.container {
+	width: 95%;
+	margin: 10px auto;
+}
+.example_grid {
+	background: #f2f2f2;
+	border: solid 1px #DDD;
+	padding: 5px;
+}
+
+
+/*------------------------------------*\
+    FORM
+\*------------------------------------*/
+
+.form-example {
+	fieldset {
+		padding: 10px;
+	}
+}
+
+/*! --------- CUSTOM SPECIFIED --------- */
+/*
+* if you want to keep compile your custom style for specified media.
+* you may want to use it.
+* but if you won't compile specified media, you have to set:
+* $specified: true;
+* $media-desktop: false;
+* $media-tablet: false;
+* $media-phone: false;
+*/
+
+@if $specified == true {
+
+	/*------------------------------------*\
+	    $MEDIA-DESKTOP
+	\*------------------------------------*/
+
+	@if $media-desktop == true {
+		/**
+		 * START YOUR STYLING HERE!
+		 */
+		
+		@include media-query(desktop) {
+			
+			/*! custom style for desktop */
+
+		}
+
+
+	} //end condition media-desktop
+
+	/*------------------------------------*\
+	    $MEDIA-TABLET
+	\*------------------------------------*/
+	/**
+	 * set condition for media tablet
+	 */
+	@else if $media-tablet == true {
+		/**
+		 * START YOUR STYLING HERE!
+		 */
+
+		@include media-query(tablet) {
+			
+			/*! custom style for tablet */
+
+		}
+
+
+	} //end condition media-tablet
+
+	/*------------------------------------*\
+	    $MEDIA-PHONE
+	\*------------------------------------*/
+	/**
+	 * set condition for media phone
+	 */
+	@else if $media-phone == true {
+		/**
+		 * START YOUR STYLING HERE!
+		 */
+
+		@include media-query(phone) {
+			
+			/*! custom style for phone */
+
+		}
+
+
+	} //end condition media-phone
+
+
+}
+
+// fallback for IE8
+@else {
+
+
+		// fallback for no script user
+		@if $no-script == true {
+
+			
+
+		}
+
+
+} // end if specified
