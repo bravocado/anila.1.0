@@ -1,0 +1,3 @@
+[submodule "vendor/anila"]
+	path = vendor/anila
+	url = https://bravocado@github.com/bravocado/anila-vendor.git
