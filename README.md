@@ -5,7 +5,7 @@ project starter
 
 ## Initializing Anila project starter
 
-    $ git clone --recursive git@github.com:bravocado/anila.git your-project-folder
+    $ git clone --recursive https://github.com/bravocado/anila.git your-project-folder
     $ cd your-project-folder
     $ ./go
 
