@@ -2,7 +2,7 @@
 
 # Tell compass where to find local extensions
 # If you followed directions and ran 'gem install modular-scale' comment the next two lines out:
-extensions_dir = "vendor/extensions"
+extensions_dir = "vendor/anila/extensions"
 
 Compass::Frameworks.register('modular-scale', :path => File.expand_path("#{extensions_dir}/modular-scale"))
 

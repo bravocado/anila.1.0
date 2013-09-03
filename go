@@ -6,7 +6,7 @@ mv .git/modules .       && \
 rm -rf .git/            && \
 git init                && \
 mv modules .git/        && \
-git add vendor		   		&& \
+git add vendor/anila		&& \
 git add .gitmodules     && \
 rm go
 
