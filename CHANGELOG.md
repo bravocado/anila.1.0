@@ -2,6 +2,12 @@
 
 ## BETA TESTING II
 
+### V.0.1.1
+
+- adding source map
+- adding xlarge for block grid (request by Mutiara Sarah)
+
+
 ### V.0.1.0
 
 - new structure.

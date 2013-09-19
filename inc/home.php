@@ -44,7 +44,7 @@
 		<div class="columns large-12 small-12 push--bottom">
 			<h5 class="push-half--bottom">I.1 <strong>BLOCK GRID</strong></h5>
 			<!-- Using only the large-block-grid -->
-			<ul class="small-block-grid-6 large-block-grid-3">
+			<ul class="small-block-grid-6 large-block-grid-3 xlarge-block-grid-2">
 			  <li><img src="img/img-demo-1.jpg"></li>
 			  <li><img src="img/img-demo-2.jpg"></li>
 			  <li><img src="img/img-demo-3.jpg"></li>
