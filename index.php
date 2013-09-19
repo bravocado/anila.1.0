@@ -42,7 +42,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 
 <!--[if (lt IE 9) & (!IEMobile)]>
-  <script src="js/html5.js"></script>
+  <script src="js/min/html5.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
 <![endif]-->
 
