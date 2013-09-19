@@ -84,7 +84,7 @@
   <!-- Grab Google CDN's jQuery, fall back to local if offline -->
   <script>window.jQuery || document.write('<script src="js/min/jquery.min.js"><\/script>')</script>
 
-  <script type="text/javascript" src="js/min/anila.js"></script>
+  <script type="text/javascript" src="js/min/anila.min.js"></script>
 
   <!-- others plugin -->
 
