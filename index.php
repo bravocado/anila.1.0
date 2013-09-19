@@ -45,10 +45,16 @@
   <script src="js/html5.js"></script>
   <link rel="stylesheet" href="css/style.css">
 <![endif]-->
+
+<!-- for printing -->
+<link rel="stylesheet" media="print" href="css/style.css" />
+
+<!-- for no script -->
 <noscript>
   <link rel="stylesheet" href="css/noscript.css" />
 </noscript>
-<script type="text/javascript" src="js/modernizr.js"></script>
+<script type="text/javascript" src="js/min/modernizr.min.js"></script>
+
 <!--[if (gt IE 8) | (IEMobile)]><!-->
 <script>
   var ADAPT_CONFIG = {
@@ -61,7 +67,7 @@
     ]
   };
 </script>
-<script src="js/adapt.min.js"></script>
+<script src="js/min/adapt.min.js"></script>
 <!--<![endif]-->
 
 </head>
@@ -76,9 +82,9 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <!-- Grab Google CDN's jQuery, fall back to local if offline -->
-  <script>window.jQuery || document.write('<script src="js/jquery.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="js/min/jquery.min.js"><\/script>')</script>
 
-  <script type="text/javascript" src="js/anila.js"></script>
+  <script type="text/javascript" src="js/min/anila.js"></script>
 
   <!-- others plugin -->
 
