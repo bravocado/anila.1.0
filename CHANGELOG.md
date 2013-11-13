@@ -2,6 +2,12 @@
 
 ## BETA TESTING II
 
+### V.0.1.2
+
+- Fix form inline button control
+- adding unpush and unpull class.
+
+
 ### V.0.1.1
 
 - adding source map
